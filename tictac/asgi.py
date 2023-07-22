@@ -9,16 +9,13 @@ https://docs.djangoproject.com/en/4.1/howto/deployment/asgi/
 
 import os
 
-# from django.core.asgi import get_asgi_application
+from django.urls import re_path
+from django.core.asgi import get_asgi_application
 
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tictac.settings")
-
-# application = get_asgi_application()
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "my_app_name.settings")
 django_asgi_app = get_asgi_application()
 
 import home.routing
-from django.core.asgi import get_asgi_application
 import django
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
