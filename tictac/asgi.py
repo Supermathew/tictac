@@ -21,17 +21,41 @@ import django
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.security.websocket import AllowedHostsOriginValidator
-
+from django.urls import path
+from django.urls import path
+from home.consumers import GameRoom
 # import appname.routing
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tictac.settings')
-django.setup()
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tictac.settings')
+# django.setup()
+
+# application = ProtocolTypeRouter({
+#     "http": get_asgi_application(),
+#     "websocket": AuthMiddlewareStack(
+#         URLRouter(
+#                 home.routing.websocket_urlpatterns
+#         )
+#     ),
+# })
+
+
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tictac.settings")
+# Initialize Django ASGI application early to ensure the AppRegistry
+# is populated before importing code that may import ORM models.
+django_asgi_app = get_asgi_application()
+
 
 application = ProtocolTypeRouter({
-    "http": get_asgi_application(),
-    "websocket": AuthMiddlewareStack(
-        URLRouter(
-                home.routing.websocket_urlpatterns
+    # Django's ASGI application to handle traditional HTTP requests
+    "http": django_asgi_app,
+
+    # WebSocket chat handler
+    "websocket": AllowedHostsOriginValidator(
+        AuthMiddlewareStack(
+            URLRouter([
+                    path('ws/game/<room_code>' , GameRoom.as_asgi()),
+            ])
         )
     ),
 })
