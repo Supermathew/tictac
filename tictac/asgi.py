@@ -14,6 +14,8 @@ import os
 # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tictac.settings")
 
 # application = get_asgi_application()
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "my_app_name.settings")
+django_asgi_app = get_asgi_application()
 
 import home.routing
 from django.core.asgi import get_asgi_application
@@ -41,7 +43,6 @@ from home.consumers import GameRoom
 # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tictac.settings")
 # # Initialize Django ASGI application early to ensure the AppRegistry
 # # is populated before importing code that may import ORM models.
-django_asgi_app = get_asgi_application()
 
 
 # application = ProtocolTypeRouter({
@@ -57,13 +58,6 @@ django_asgi_app = get_asgi_application()
 #         )
 #     ),
 # })
-
-
-import os
-import django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "my_app_name.settings")
-django.setup()
-# from channels.http import AsgiHandler
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 application = ProtocolTypeRouter({
