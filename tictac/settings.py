@@ -32,7 +32,7 @@ DEBUG = env("DJANGO_DEBUG")
 
 ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = ['https://tictac-vcai.onrender.com/']
+CSRF_TRUSTED_ORIGINS = ['https://tictac-vcai.onrender.com']
 
 
 # Application definition
