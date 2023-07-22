@@ -327,8 +327,7 @@
 
         var player = username.charAt(0)
 
-        let socket = new WebSocket('ws://localhost:8000/ws/game/' +room_code)
-
+        let socket = new WebSocket('wss://tictac-vcai.onrender.com/ws/game/' +room_code)
         let gameState = ["","","","","","","","",""]
 
         gameState[0]='{{data.one}}'
