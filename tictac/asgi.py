@@ -24,6 +24,8 @@ from channels.security.websocket import AllowedHostsOriginValidator
 from django.urls import path
 from django.urls import path
 from home.consumers import GameRoom
+import django
+django.setup()
 # import appname.routing
 
 # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tictac.settings')
