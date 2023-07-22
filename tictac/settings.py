@@ -114,11 +114,22 @@ DATABASES = {
 
 # REDIS_URL = env('REDIS_URL', 'redis://localhost:6379')
 
+import ssl
+
+ssl_context = ssl.SSLContext()
+ssl_context.check_hostname = False
+
+heroku_redis_ssl_host = {
+    'address': env("REDIS_URL"),  # The 'rediss' schema denotes a SSL connection.
+    'ssl': ssl_context
+
+}
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'REDIS_URL': env("REDIS_URL"),
+            'hosts': (heroku_redis_ssl_host,),
             'USER': env('REDISUSER'),
             'PASSWORD': env('REDISPASSWORD'),
             'PORT': env('REDISPORT'),
