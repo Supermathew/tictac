@@ -32,6 +32,8 @@ DEBUG = env("DJANGO_DEBUG")
 
 ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = ['*']
+
 
 # Application definition
 
