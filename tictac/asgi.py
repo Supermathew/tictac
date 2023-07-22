@@ -38,22 +38,39 @@ from home.consumers import GameRoom
 
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tictac.settings")
-# Initialize Django ASGI application early to ensure the AppRegistry
-# is populated before importing code that may import ORM models.
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tictac.settings")
+# # Initialize Django ASGI application early to ensure the AppRegistry
+# # is populated before importing code that may import ORM models.
 django_asgi_app = get_asgi_application()
 
 
-application = ProtocolTypeRouter({
-    # Django's ASGI application to handle traditional HTTP requests
-    "http": django_asgi_app,
+# application = ProtocolTypeRouter({
+#     # Django's ASGI application to handle traditional HTTP requests
+#     "http": django_asgi_app,
 
-    # WebSocket chat handler
-    "websocket": AllowedHostsOriginValidator(
-        AuthMiddlewareStack(
-            URLRouter([
-                    path('ws/game/<room_code>' , GameRoom.as_asgi()),
-            ])
+#     # WebSocket chat handler
+#     "websocket": AllowedHostsOriginValidator(
+#         AuthMiddlewareStack(
+#             URLRouter([
+#                     path('ws/game/<room_code>' , GameRoom.as_asgi()),
+#             ])
+#         )
+#     ),
+# })
+
+
+import os
+import django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "my_app_name.settings")
+django.setup()
+# from channels.http import AsgiHandler
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter, URLRouter
+application = ProtocolTypeRouter({
+    "http": django_asgi_app,
+     "websocket": AuthMiddlewareStack(
+         URLRouter(
+                home.routing.websocket_urlpatterns
         )
     ),
 })
