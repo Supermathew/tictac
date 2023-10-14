@@ -130,10 +130,10 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             'hosts': (heroku_redis_ssl_host,),
-            'USER': env('REDISUSER'),
-            'PASSWORD': env('REDISPASSWORD'),
-            'PORT': env('REDISPORT'),
-            'HOST': env('REDISHOST'),
+            # 'USER': env('REDISUSER'),
+            # 'PASSWORD': env('REDISPASSWORD'),
+            # 'PORT': env('REDISPORT'),
+            # 'HOST': env('REDISHOST'),
         },
     },
 }
